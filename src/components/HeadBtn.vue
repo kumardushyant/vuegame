@@ -5,8 +5,8 @@
                 <b-button :variant="btn.vary" size="md" v-for="btn in actionBtns" :key="btn.text" @click="triggerAction(btn.id)">{{ btn.text }}</b-button>
             </b-button-group>
         </div>
-        <div v-else  class="contain">
-            <button @click="triggerAction()">Start New Game</button>
+        <div v-else class="contain">
+            <b-button :variant="primary" size="md" @click="triggerAction()">Start New Game</b-button>
         </div>
     </div>    
 </template>

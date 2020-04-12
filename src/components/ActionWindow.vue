@@ -20,15 +20,15 @@ export default class ActionWindow extends Vue {
 
     public addMessage (msg: string, isYou: boolean): void {
         if(isYou) {
-            this.msgs.push({
+            this.msgs = [{
                 "text": msg,
                 "cls": "youText"
-            });
+            }].concat(this.msgs);
         } else {
-            this.msgs.push({
+            this.msgs = [{
                 "text": msg,
                 "cls": "monsText"
-            });
+            }].concat(this.msgs);
         }
     }
 
