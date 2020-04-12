@@ -68,6 +68,10 @@ export default class HeadBtn extends Vue {
                 break;
         }
     }
+
+    disableBtns (): void {
+        this.$el.querySelectorAll('button').forEach(elem => console.log(elem));
+    }
 }
 </script>
 

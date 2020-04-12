@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header :you=youVal :monster=monsVal />
-        <HeadBtn :showBtns=isBtn @attack="attack" @specattack="specattack" @heal="heal" @startNew="startNew" @giveUp="giveUp" />
+        <HeadBtn ref="btnHead" :showBtns=isBtn @attack="attack" @specattack="specattack" @heal="heal" @startNew="startNew" @giveUp="giveUp" />
         <ActionWindow ref="actionWindow" :style="{ marginTop: '10px' }" />
         <b-modal id="resultModal" ok-only>
           <p>{{ result }}</p>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import Header from './Header.vue';
 import HeadBtn from './HeadBtn.vue';
 import ActionWindow from './ActionWindow.vue';
@@ -43,7 +43,6 @@ export default class Mainpage extends Vue {
       this.youVal -= hitVal;
       actionWin.addMessage("Monster attacked you. You have lost "+hitVal+" health points.", false);  
     }
-    this.checkState();
   }
   specattack (): void {
     const actionWin = this.$refs.actionWindow as ActionWindow;
@@ -55,25 +54,38 @@ export default class Mainpage extends Vue {
       this.youVal -= hitVal;
       actionWin.addMessage("Monster attacked you. You have lost "+hitVal+" health points.", false);  
     }
-    this.checkState();
   }
-  private checkState (): void {
-    if(this.youVal <= 0) {
-      this.$bvModal.msgBoxOk("You have died. Monstor killed you.").then(val => {
+
+  @Watch("youVal",{
+    immediate: true
+  })
+  checkYouVal(newVal: number) {
+    if(newVal <= 0) {
+      this.disableBtns();
+      this.$bvModal.msgBoxOk("You have died. Monstor killed you.").then(() => {
         const actionWin = this.$refs.actionWindow as ActionWindow;
         actionWin.cleanMessages();
         this.init(); 
       }).catch(err => console.log(err));
     }
-    
-    if(this.monsVal <=0) {
-      this.$bvModal.msgBoxOk("You have won. Monstor is slayed.").then(val => {
-      const actionWin = this.$refs.actionWindow as ActionWindow;
-      actionWin.cleanMessages();
-      this.init(); 
-    }).catch(err => console.log(err));
-      this.isBtn = false;
+  }
+
+  @Watch("monsVal", {
+    immediate: true
+  })
+  checkMonsVal(newVal: number) {
+    if(newVal <= 0) {
+      this.disableBtns();
+      this.$bvModal.msgBoxOk("You have won. Monstor is slayed.").then(() => {
+        const actionWin = this.$refs.actionWindow as ActionWindow;
+        actionWin.cleanMessages();
+        this.init(); 
+      }).catch(err => console.log(err));
     }
+  }
+  private disableBtns (): void {
+    const btnHead = this.$refs.btnHead as HeadBtn;
+    btnHead.disableBtns();
   }
   heal (): void {
     const actionWin = this.$refs.actionWindow as ActionWindow;
@@ -96,7 +108,7 @@ export default class Mainpage extends Vue {
     this.init();
   }
   giveUp (): void {
-    this.$bvModal.msgBoxOk("You are coward. You have fled battle field.").then(val => {
+    this.$bvModal.msgBoxOk("You are coward. You have fled battle field.").then(() => {
       const actionWin = this.$refs.actionWindow as ActionWindow;
       actionWin.cleanMessages();
       this.init(); 
