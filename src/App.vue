@@ -1,25 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Mainpage />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import Mainpage from './components/Mainpage.vue';
 
 @Component({
   components: {
-    HelloWorld,
-  },
+    Mainpage
+  }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+}
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Open Sans";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
