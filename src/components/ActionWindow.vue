@@ -45,8 +45,7 @@ div.auditContainer {
     border: 1px solid rgba(212, 209, 209, 0.692);
     display: grid;
     box-shadow: 2px 2px #e2e1e1;
-    min-height: 40px;
-    min-height: 40px;
+    min-height: 20px;
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
@@ -60,11 +59,10 @@ div.msgText span {
 }
 
 div.msgText {
-    padding-block: 4em 1em;
     margin-left: 10%;
     margin-right: 10%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     display: block;
 }
 
